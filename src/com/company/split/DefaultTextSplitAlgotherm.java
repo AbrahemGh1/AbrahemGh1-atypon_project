@@ -17,13 +17,22 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
         maxBlockSize = 64;
     }
 
+    @Override
+    public long getLength() {
+        return file.length();
+    }
+
+    @Override
+    public boolean isSplittable() {
+        return startSplitAtPosition < file.length();
+    }
 
     @Override
     public SplitBlockInfo MakeSplit() throws FileNotFoundException {// add ur algo here
         SplitBlockInfo sp = new SplitBlockInfo();
         sp.setFirstByteLocation(startSplitAtPosition);
-        getLengthOfSplit();
-        sp.setLength(this.getLengthOfSplit());
+        this.startSplitAtPosition=this.getLengthOfSplit();
+        sp.setLength(startSplitAtPosition);
         return sp;
     }
 
@@ -43,9 +52,10 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
         try {
             dataInputStream.seek(startOffset);
             byte[] bytes = new byte[10];//10 is the max allowed size to extend.
-            String str = new String(bytes);
             dataInputStream.readFully(bytes);
-            return str.indexOf(" ");
+            String str = new String(bytes);
+            int temp=str.indexOf(" ");
+            return str.indexOf(" ")+startOffset;
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,4 +5,8 @@ import java.nio.file.Path;
 
 interface SplitAlgotherm {
     SplitBlockInfo MakeSplit() throws FileNotFoundException;
+
+    long getLength();
+
+    boolean isSplittable();
 }

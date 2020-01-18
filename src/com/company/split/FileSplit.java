@@ -1,5 +1,6 @@
 package com.company.split;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -13,18 +14,18 @@ class FileSplit implements InputSplit {
     private long length;
     private SplitAlgotherm sa;
 
-    FileSplit() {
+    FileSplit(Path FilePath) throws FileNotFoundException {
+        start=0;
         sa = new DefaultTextSplitAlgotherm(FilePath);
+        length= sa.getLength();
     }
 
     @Override
     public List<SplitBlockInfo> getSplits() throws FileNotFoundException {
         List<SplitBlockInfo> ls = new ArrayList<>();
-
-        while (start < length) {
+        while (sa.isSplittable()) {
             if(isSplittable()){
             SplitBlockInfo s = sa.MakeSplit();
-            start += s.getLength();
             ls.add(s);
             }
         }
