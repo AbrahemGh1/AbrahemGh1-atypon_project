@@ -1,0 +1,11 @@
+<?com.company.any.xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <mapperInfo>
+        <mapperNumber>2</mapperNumber>
+        <threadsNumber>2</threadsNumber>
+    </mapperInfo>
+    <reducerInfo>
+        <reducerNumber>2</reducerNumber>
+        <threadsNumber>2</threadsNumber>
+    </reducerInfo>
+</config>

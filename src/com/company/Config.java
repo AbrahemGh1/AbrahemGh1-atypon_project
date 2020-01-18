@@ -6,6 +6,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Config {
     private ReducerInfo reducerInfo = new ReducerInfo();
     private MapperInfo mapperInfo = new MapperInfo();
+    //add
+    //inputFile
+    //Mapper class File
+    //Reducer class file
+    //output file
+
 
 
     public MapperInfo getMapperInfo() {

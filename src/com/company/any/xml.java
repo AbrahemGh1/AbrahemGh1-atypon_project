@@ -1,34 +1,18 @@
-package com.company;
+package com.company.any;
 
-import com.company.test.fileUploader;
+import com.company.Config;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
 
-public class Main {
-    static String host = "127.0.0.1";
-
-    public static void main(String[] args) throws IOException {
-        //Java object. We will convert it to XML.
-        Config config = new Config();
-
-
-        //Method which uses JAXB to convert object to XML
-        jaxbObjectToXML(config);
-
-
-        //Script.executeCommand("/home/abrahem/IdeaProjects/untitled3/src/createContainer.sh");
-
-        new fileUploader(host,2022).uploadFile(Paths.get("/home/abrahem/IdeaProjects/untitled3/Config.xml"));
-    }
-
-    private static void jaxbObjectToXML(Config config) {
+public class xml {
+    public static void jaxObjectToXML(Config config) {
         try {
             //Create JAXB Context
             JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
@@ -56,5 +40,23 @@ public class Main {
         } catch (JAXBException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    static Config XMLToJaxbObject(String path) {
+        File xmlFile = new File(path);
+        Config config = null;
+
+        JAXBContext jaxbContext;
+        try {
+            jaxbContext = JAXBContext.newInstance(Config.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            config = (Config) jaxbUnmarshaller.unmarshal(xmlFile);
+
+            System.out.println(config);
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return config;
     }
 }
