@@ -1,4 +1,4 @@
-package com.company.split;
+package com.company.input;
 
 import com.company.any.Writable;
 
@@ -11,6 +11,16 @@ import java.util.Objects;
 public class SplitBlockInfo implements Comparable, Serializable, Writable {
     private long firstByteLocation;
     private Long length;
+    private String dataLocation;
+
+
+    public String getDataLocation() {
+        return dataLocation;
+    }
+
+    public void setDataLocation(String dataLocation) {
+        this.dataLocation = dataLocation;
+    }
 
 
     public void setLength(Long length) {
@@ -31,12 +41,6 @@ public class SplitBlockInfo implements Comparable, Serializable, Writable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        assert o instanceof SplitBlockInfo;
-        return this.getLength().compareTo(((SplitBlockInfo) o).getLength());
-    }
-
-    @Override
     public void write(DataOutput out) throws IOException {
         Objects.requireNonNull(out, "out can't be null");
         out.writeLong(firstByteLocation);
@@ -48,6 +52,11 @@ public class SplitBlockInfo implements Comparable, Serializable, Writable {
         Objects.requireNonNull(in, "in can't be null");
         firstByteLocation = in.readLong();
         length = in.readLong();
+    }
 
+    @Override
+    public int compareTo(Object o) {
+        assert o instanceof SplitBlockInfo;
+        return this.getLength().compareTo(((SplitBlockInfo) o).getLength());
     }
 }

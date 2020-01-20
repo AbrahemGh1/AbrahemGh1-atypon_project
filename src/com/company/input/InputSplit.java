@@ -1,4 +1,4 @@
-package com.company.split;
+package com.company.input;
 
 import java.io.FileNotFoundException;
 import java.util.List;

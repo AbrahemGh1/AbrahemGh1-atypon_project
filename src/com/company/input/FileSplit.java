@@ -1,7 +1,5 @@
-package com.company.split;
+package com.company.input;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -9,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 class FileSplit implements InputSplit {
-    private Path FilePath;
     private long start;
     private long length;
     private SplitAlgotherm sa;
@@ -33,9 +30,6 @@ class FileSplit implements InputSplit {
         return ls;
     }
     private boolean isSplittable (){
-
-
-
         return true;
     }
 }

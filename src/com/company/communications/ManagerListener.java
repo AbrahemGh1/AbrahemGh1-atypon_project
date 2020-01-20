@@ -1,4 +1,4 @@
-package com.company.io;
+package com.company.communications;
 
 import com.company.comm.Stoppable;
 

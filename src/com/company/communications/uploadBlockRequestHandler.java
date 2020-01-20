@@ -1,4 +1,4 @@
-package com.company.io;
+package com.company.communications;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,7 +10,7 @@ public class uploadBlockRequestHandler extends Thread {
     Socket clientSocket = null;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
-    InputSplitHub e = new InputSplitHub();//this need to refactor
+    InputSplitsHub e = new InputSplitsHub();//this need to refactor
 
 
     uploadBlockRequestHandler(Socket s) throws IOException {

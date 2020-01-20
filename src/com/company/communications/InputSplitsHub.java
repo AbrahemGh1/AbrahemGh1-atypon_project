@@ -1,11 +1,11 @@
-package com.company.io;
+package com.company.communications;
 
-import com.company.split.SplitBlockInfo;
+import com.company.input.SplitBlockInfo;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class InputSplitHub {
+public class InputSplitsHub {
     private static ArrayList<SplitBlockInfo> inputSplits = new ArrayList<>();
 
     public static void add(SplitBlockInfo e) {
@@ -16,7 +16,7 @@ public class InputSplitHub {
         return inputSplits.get(0);
     }
 
-    public void setInputSplits(ArrayList<SplitBlockInfo> e) {
+    public static void setInputSplits(ArrayList<SplitBlockInfo> e) {
         Objects.requireNonNull(e);
         inputSplits = e;
     }
