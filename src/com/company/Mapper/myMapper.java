@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class myMapper extends Mapper<Integer, String, String, Integer> {
-    private static Pattern p = Pattern.compile("[a-zA-Z]+");
 
     public myMapper(SplitBlockInfo s) throws FileNotFoundException {
         super(s);

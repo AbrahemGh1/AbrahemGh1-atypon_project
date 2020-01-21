@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class FileSplit implements InputSplit {
+public class FileSplit implements InputSplit {
     private long start;
     private long length;
     private SplitAlgotherm sa;
 
-    FileSplit(Path FilePath) throws FileNotFoundException {
-        start=0;
+    public FileSplit(Path FilePath) throws FileNotFoundException {
+        start = 0;
         sa = new DefaultTextSplitAlgotherm(FilePath);
-        length= sa.getLength();
+        length = sa.getLength();
     }
 
     @Override

@@ -6,11 +6,16 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class uploadBlockRequestHandler extends Thread {
+public class uploadBlockRequestHandler {
     Socket clientSocket = null;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
-    InputSplitsHub e = new InputSplitsHub();//this need to refactor
+    private static InputSplitsHub hub;//this need to refactor
+
+
+    public static void setE(InputSplitsHub hub) {
+        uploadBlockRequestHandler.hub = hub;
+    }
 
 
     uploadBlockRequestHandler(Socket s) throws IOException {
@@ -19,12 +24,12 @@ public class uploadBlockRequestHandler extends Thread {
         dataOutputStream = new DataOutputStream(s.getOutputStream());
     }
 
-    @Override
+    //@Override
     public void run() {
         try {
             String a = dataInputStream.readUTF();
             while ("M".equals(a)) {
-                e.getNewInputSplit().write(dataOutputStream);
+                hub.getNewInputSplit().write(dataOutputStream);
             }
         } catch (SocketException e) {
             System.out.println(e.getMessage());

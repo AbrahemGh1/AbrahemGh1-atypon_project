@@ -27,6 +27,8 @@ public class FileDownloader extends Thread{
                 while (in.read(bytes)!=-1){
                     fos.write(bytes);
                 }
+
+
                 clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
