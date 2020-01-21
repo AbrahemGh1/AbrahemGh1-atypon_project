@@ -45,6 +45,7 @@ public class SplitBlockInfo implements Comparable, Serializable, Writable {
         Objects.requireNonNull(out, "out can't be null");
         out.writeLong(firstByteLocation);
         out.writeLong(length);
+        out.writeUTF(dataLocation);
     }
 
     @Override
@@ -52,6 +53,7 @@ public class SplitBlockInfo implements Comparable, Serializable, Writable {
         Objects.requireNonNull(in, "in can't be null");
         firstByteLocation = in.readLong();
         length = in.readLong();
+        dataLocation = in.readUTF();
     }
 
     @Override

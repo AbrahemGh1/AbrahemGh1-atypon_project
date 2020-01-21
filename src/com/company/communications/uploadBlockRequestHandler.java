@@ -10,11 +10,11 @@ public class uploadBlockRequestHandler {
     Socket clientSocket = null;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
-    private static InputSplitsHub hub;//this need to refactor
+    private static InputSplitsHub TasksHub;//this need to refactor
 
 
     public static void setE(InputSplitsHub hub) {
-        uploadBlockRequestHandler.hub = hub;
+        uploadBlockRequestHandler.TasksHub = hub;
     }
 
 
@@ -27,15 +27,25 @@ public class uploadBlockRequestHandler {
     //@Override
     public void run() {
         try {
-            String a = dataInputStream.readUTF();
-            while ("M".equals(a)) {
-                hub.getNewInputSplit().write(dataOutputStream);
+            String messageFromClient = dataInputStream.readUTF();
+            switch (messageFromClient) {
+                case "M":
+                    clientRequestInputSplit(dataInputStream);
+                    break;
+                case "done":
             }
+            messageFromClient = dataInputStream.readUTF();
         } catch (SocketException e) {
             System.out.println(e.getMessage());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void clientRequestInputSplit(DataInputStream dataInputStream) throws IOException {
+        do {
+            TasksHub.getNewInputSplit().write(dataOutputStream);
+        } while (dataInputStream.readUTF().equalsIgnoreCase("M") && TasksHub.hasInputSplit());
     }
 
 }

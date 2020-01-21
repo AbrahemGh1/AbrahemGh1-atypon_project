@@ -19,7 +19,7 @@ public class myMapper extends Mapper<Integer, String, String, Integer> {
         TreeMap<String, Integer> wordCount = new TreeMap<String, Integer>();
         Matcher matcher;
         String str = value;
-        if (!str.equals("")) {
+        if (str != null && !str.equals("")) {
             matcher = pattern.matcher(str);
             while (matcher.find()) {
                 String word = matcher.group();

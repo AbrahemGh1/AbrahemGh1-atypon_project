@@ -15,7 +15,7 @@ public class MapperListener extends Thread {
     Socket s;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
-    List<SplitBlockInfo> ml = new ArrayList();
+    public static List<SplitBlockInfo> ml = new ArrayList();
 
     public MapperListener(int portNumber) throws IOException {
         s = new Socket(InetAddress.getLocalHost(), portNumber);

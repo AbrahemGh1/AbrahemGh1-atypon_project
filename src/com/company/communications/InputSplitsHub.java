@@ -28,7 +28,7 @@ public class InputSplitsHub {
         inputSplits = e;
     }
 
-    public boolean h() {
-        return inputSplits.isEmpty();
+    public boolean hasInputSplit() {
+        return !inputSplits.isEmpty();
     }
 }

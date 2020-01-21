@@ -12,7 +12,6 @@ public abstract class Mapper<keyIn, valueIn, keyOut, valueOut> extends Thread {
     private RecordReader recordReader;
 
     Mapper(SplitBlockInfo s) throws FileNotFoundException {
-
         recordReader = new LineRecordReader(s);
         out = new HashMap<>();
     }
