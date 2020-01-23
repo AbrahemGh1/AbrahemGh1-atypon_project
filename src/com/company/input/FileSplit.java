@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileSplit implements InputSplit {
+    //Consider to use Thread her but note the input split should be sorted before go to mapper for performance issue
     private long start;
     private long length;
     private SplitAlgotherm sa;
@@ -21,10 +22,9 @@ public class FileSplit implements InputSplit {
     public List<SplitBlockInfo> getSplits() throws FileNotFoundException {
         List<SplitBlockInfo> ls = new ArrayList<>();
         while (isSplittable()) {
-            SplitBlockInfo s = getSplitNow();
-            ls.add(s);
+            ls.add(getSplitNow());
         }
-        Collections.sort(ls);
+        Collections.sort(ls, Collections.reverseOrder());
         return ls;
     }
 
@@ -34,7 +34,7 @@ public class FileSplit implements InputSplit {
         return null;
     }
 
-    private boolean isSplittable() {
+    public boolean isSplittable() {
         return sa.isSplittable();
     }
 }

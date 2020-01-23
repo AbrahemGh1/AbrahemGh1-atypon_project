@@ -18,7 +18,7 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
         file = new File(String.valueOf(filePath));
         randomAccessFile = new RandomAccessFile(file.getAbsolutePath(), "r");
         startSplitAtPosition = 0;
-        maxBlockSize = 64;
+        maxBlockSize = 150;
     }
 
     @Override
@@ -48,7 +48,7 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
 
     long getLengthOfSplit() {
         long lastIndex = startSplitAtPosition + maxBlockSize;
-        if (startSplitAtPosition + maxBlockSize >= file.length())
+        if (lastIndex >= file.length())
             return file.length();//need test
 
         return getNextEmptyCharacterFromFile(lastIndex);

@@ -14,11 +14,6 @@ enum RequestCommand implements Command {
         @Override
         public void execute(Socket s) throws IOException {
             new uploadBlockRequestHandler(s).run();
-//            NodeWaitTaskQ.addClient(s);
-//            if (!firstClient) {
-//                new NodeWaitTaskQ().run();
-//                firstClient = true;
-//            }
         }
     },
 
@@ -27,8 +22,7 @@ enum RequestCommand implements Command {
         public void execute(Socket s) throws IOException {
             s.close();
         }
-    };
-    boolean firstClient = false;
+    }
 }
 
 interface Command {
@@ -63,12 +57,6 @@ public class ManagerListener /*extends Thread*/ implements Stoppable {
     public void Stop() {
 
     }
-
-//    public void performCommand(String commandName, String input) {
-//        Command command = map.get(commandName);
-//        command.setInput(input);
-//        command.execute();
-//    }
 }
 
 

@@ -12,19 +12,18 @@ import java.util.List;
 public class MangerServer {
     public static void main(String[] args) throws FileNotFoundException {
         FileSplit fs = new FileSplit(Paths.get("/home/abrahem/Desktop/input.txt"));
-        // List<? extends SplitBlockInfo> s = fs.getSplits();
         List<SplitBlockInfo> s = fs.getSplits();
-        NodeWaitTaskQ nodeWaitTaskQ = new NodeWaitTaskQ();
+
         try {
-            TaskPool hub = new TaskPool();
-            hub.setInputSplits((ArrayList<SplitBlockInfo>) s);
-            uploadBlockRequestHandler.setE(hub);
+            TaskPool taskPool = new TaskPool();
+            taskPool.setInputSplits((ArrayList<SplitBlockInfo>) s);
+            uploadBlockRequestHandler.setE(taskPool);
             ManagerListener ml = new ManagerListener(2000);
             ml.run();
-            nodeWaitTaskQ.run();
         } catch (IOException e) {
             e.printStackTrace();
         }
         for (; ; ) ;
     }
+
 }

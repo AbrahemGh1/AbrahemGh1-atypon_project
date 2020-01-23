@@ -16,7 +16,7 @@ public class MapperListener extends Thread {
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
     static int p = 0;
-    public List<SplitBlockInfo> ml = new ArrayList();
+    public List<SplitBlockInfo> ml = new ArrayList<>();
     public int TNumber = 0;
 
     public MapperListener(int portNumber) throws IOException {

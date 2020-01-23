@@ -28,7 +28,7 @@ public class TaskPool implements Closeable {
         return temp;
     }
 
-    public synchronized List getNewInputSplit(int number) {
+    public synchronized List<? extends SplitBlockInfo> getNewInputSplit(int number) {
         ArrayList<SplitBlockInfo> inputSplits = new ArrayList<SplitBlockInfo>();
         int counter = 0;
         while (counter < number) {

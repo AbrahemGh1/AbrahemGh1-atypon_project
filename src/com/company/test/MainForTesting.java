@@ -1,10 +1,11 @@
 package com.company.test;
 
 
+import com.company.comm.FileDownloaderListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import com.company.comm.FileDownloaderListener;
 
 ///home/abrahem/IdeaProjects/untitled3/src/com.company.comm.ListenerT.java
 public class MainForTesting {
@@ -15,8 +16,6 @@ public class MainForTesting {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static void readBashScript() {

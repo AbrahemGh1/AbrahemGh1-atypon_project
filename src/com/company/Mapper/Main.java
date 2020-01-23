@@ -17,7 +17,7 @@ public class Main {
         MapperListener mapperListener = new MapperListener(2000);
         mapperListener.start();
         for (SplitBlockInfo s : mapperListener.ml) {
-            Mapper m = new myMapper(s);
+            Mapper<? extends Integer, ? extends String, ? extends String, ? extends Integer> m = new myMapper(s);
             m.start();
         }
 
