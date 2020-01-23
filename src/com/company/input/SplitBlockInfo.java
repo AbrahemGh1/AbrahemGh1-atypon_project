@@ -5,10 +5,9 @@ import com.company.any.Writable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Objects;
 
-public class SplitBlockInfo implements Comparable, Serializable, Writable {
+public class SplitBlockInfo implements Comparable, Writable {
     private long firstByteLocation;
     private Long length;
     private String dataLocation;
@@ -42,15 +41,15 @@ public class SplitBlockInfo implements Comparable, Serializable, Writable {
 
     @Override
     public void write(DataOutput out) throws IOException {
-        Objects.requireNonNull(out, "out can't be null");
+        Objects.requireNonNull(out, "out object can't be null");
         out.writeLong(firstByteLocation);
         out.writeLong(length);
         out.writeUTF(dataLocation);
     }
 
     @Override
-    public void readFields(DataInput in) throws IOException {
-        Objects.requireNonNull(in, "in can't be null");
+    public void read(DataInput in) throws IOException {
+        Objects.requireNonNull(in, "in Object can't be null");
         firstByteLocation = in.readLong();
         length = in.readLong();
         dataLocation = in.readUTF();

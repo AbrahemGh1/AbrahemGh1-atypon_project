@@ -28,8 +28,8 @@ public abstract class Mapper<keyIn, valueIn, keyOut, valueOut> extends Thread {
             while (recordReader.hasNext()) {
                 map((keyIn) recordReader.getKey(), (valueIn) recordReader.getValue());
             }
+            System.out.println("Thread out ");
         } catch (Exception e) {
-            System.out.println("Thread out.");
             e.printStackTrace();
         }
     }

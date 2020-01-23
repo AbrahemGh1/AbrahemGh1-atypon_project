@@ -14,12 +14,14 @@ public class MangerServer {
         FileSplit fs = new FileSplit(Paths.get("/home/abrahem/Desktop/input.txt"));
         // List<? extends SplitBlockInfo> s = fs.getSplits();
         List<SplitBlockInfo> s = fs.getSplits();
+        NodeWaitTaskQ nodeWaitTaskQ = new NodeWaitTaskQ();
         try {
-            InputSplitsHub hub = new InputSplitsHub();
+            TaskPool hub = new TaskPool();
             hub.setInputSplits((ArrayList<SplitBlockInfo>) s);
             uploadBlockRequestHandler.setE(hub);
             ManagerListener ml = new ManagerListener(2000);
             ml.run();
+            nodeWaitTaskQ.run();
         } catch (IOException e) {
             e.printStackTrace();
         }

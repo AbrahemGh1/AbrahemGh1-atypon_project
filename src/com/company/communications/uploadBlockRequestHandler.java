@@ -1,22 +1,22 @@
 package com.company.communications;
 
+import com.company.input.SplitBlockInfo;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class uploadBlockRequestHandler {
     Socket clientSocket = null;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
-    private static InputSplitsHub TasksHub;//this need to refactor
+    private static TaskPool taskPool;//this need to refactor
 
 
-    public static void setE(InputSplitsHub hub) {
-        uploadBlockRequestHandler.TasksHub = hub;
+    public static void setE(TaskPool pool) {
+        uploadBlockRequestHandler.taskPool = pool;
     }
-
 
     uploadBlockRequestHandler(Socket s) throws IOException {
         clientSocket = s;
@@ -24,28 +24,40 @@ public class uploadBlockRequestHandler {
         dataOutputStream = new DataOutputStream(s.getOutputStream());
     }
 
+    //HasMore
     //@Override
     public void run() {
         try {
-            String messageFromClient = dataInputStream.readUTF();
-            switch (messageFromClient) {
-                case "M":
-                    clientRequestInputSplit(dataInputStream);
-                    break;
-                case "done":
-            }
-            messageFromClient = dataInputStream.readUTF();
-        } catch (SocketException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            int numberOfRequestedTasks = dataInputStream.readInt();
+            uploadTask(numberOfRequestedTasks);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private void clientRequestInputSplit(DataInputStream dataInputStream) throws IOException {
-        do {
-            TasksHub.getNewInputSplit().write(dataOutputStream);
-        } while (dataInputStream.readUTF().equalsIgnoreCase("M") && TasksHub.hasInputSplit());
+    private void uploadTask(int numberOfRequestedTasks) throws IOException {
+        int count = 0;
+        if (!taskPool.isClosed()) {//here u may need to add a synchronized
+            while (taskPool.hasTask() && CheckIfClientNeedMore(count, numberOfRequestedTasks)) {
+                taskPool.getNewInputSplit().write(dataOutputStream);
+                count++;
+            }
+        }
     }
 
+    private boolean CheckIfClientNeedMore(int count, int numberOfRequestedTasks) {
+        return (count < numberOfRequestedTasks);
+    }
+
+    private void addNodeToWaitingQ(Socket clientSocket) {
+    }
+
+    private void requestNodeToShutDown() {
+        throw new IllegalStateException("Request Node to close.");
+    }
+
+    private void uploadInputSplitToClient(SplitBlockInfo e) throws IOException {
+        e.write(dataOutputStream);
+    }
 }
+

@@ -20,16 +20,21 @@ public class FileSplit implements InputSplit {
     @Override
     public List<SplitBlockInfo> getSplits() throws FileNotFoundException {
         List<SplitBlockInfo> ls = new ArrayList<>();
-        while (sa.isSplittable()) {
-            if(isSplittable()){
-            SplitBlockInfo s = sa.MakeSplit();
+        while (isSplittable()) {
+            SplitBlockInfo s = getSplitNow();
             ls.add(s);
-            }
         }
         Collections.sort(ls);
         return ls;
     }
-    private boolean isSplittable (){
-        return true;
+
+    public SplitBlockInfo getSplitNow() throws FileNotFoundException {
+        if (isSplittable())
+            return sa.MakeSplit();
+        return null;
+    }
+
+    private boolean isSplittable() {
+        return sa.isSplittable();
     }
 }

@@ -15,25 +15,30 @@ public class MapperListener extends Thread {
     Socket s;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
-    public static List<SplitBlockInfo> ml = new ArrayList();
+    static int p = 0;
+    public List<SplitBlockInfo> ml = new ArrayList();
+    public int TNumber = 0;
 
     public MapperListener(int portNumber) throws IOException {
         s = new Socket(InetAddress.getLocalHost(), portNumber);
         dataInputStream = new DataInputStream(s.getInputStream());
         dataOutputStream = new DataOutputStream(s.getOutputStream());
+        TNumber = p;
+        p++;
     }
 
     public void run() {
         try {
-            dataOutputStream.writeUTF("M");
-            while (count < 19113) {
+            dataOutputStream.writeUTF("REQUEST_TASK");
+            dataOutputStream.writeInt(5);
+            while (count < 5) {
                 SplitBlockInfo s = new SplitBlockInfo();
-                s.readFields(dataInputStream);
+                s.read(dataInputStream);
                 ml.add(s);
                 count++;
                 System.out.println(count);
-                dataOutputStream.writeUTF("M");
             }
+            System.out.println("received Task:" + count);
         } catch (IOException o) {
             o.printStackTrace();
         }

@@ -2,11 +2,40 @@ package com.company.communications;
 
 import com.company.comm.Stoppable;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ManagerListener implements Stoppable {
+enum RequestCommand implements Command {
+
+    REQUEST_TASK {
+        @Override
+        public void execute(Socket s) throws IOException {
+            new uploadBlockRequestHandler(s).run();
+//            NodeWaitTaskQ.addClient(s);
+//            if (!firstClient) {
+//                new NodeWaitTaskQ().run();
+//                firstClient = true;
+//            }
+        }
+    },
+
+    REQUEST_CLOSE {
+        @Override
+        public void execute(Socket s) throws IOException {
+            s.close();
+        }
+    };
+    boolean firstClient = false;
+}
+
+interface Command {
+    void execute(Socket s) throws IOException;
+}
+
+public class ManagerListener /*extends Thread*/ implements Stoppable {
     private ServerSocket serverSocket;
     private int portNumber;
 
@@ -15,23 +44,31 @@ public class ManagerListener implements Stoppable {
         this.portNumber = portNumber;
     }
 
-    public void Stop() {
-
-    }
-
     //@Override
     public void run() {
         System.out.println("ManagerListener Listen to port:" + portNumber);
-        try {
-            while (true) {
-                Socket s = serverSocket.accept();
-                System.out.println("accepted");
-                new uploadBlockRequestHandler(s).run();
-            }
+        try (Socket s = serverSocket.accept();
+             DataOutputStream out = new DataOutputStream(s.getOutputStream());
+             DataInputStream in = new DataInputStream(s.getInputStream())) {
+
+            String messageCommand = in.readUTF();
+            RequestCommand.valueOf(messageCommand).execute(s);
+            //    ExecutorService service = new ThreadPoolExecutor(8,8, more args here...);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void Stop() {
+
+    }
+
+//    public void performCommand(String commandName, String input) {
+//        Command command = map.get(commandName);
+//        command.setInput(input);
+//        command.execute();
+//    }
 }
 
 

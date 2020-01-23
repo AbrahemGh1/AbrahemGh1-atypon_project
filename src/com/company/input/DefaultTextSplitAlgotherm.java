@@ -27,12 +27,12 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
     }
 
     @Override
-    public boolean isSplittable() {
+    public synchronized boolean isSplittable() {
         return startSplitAtPosition < file.length();
     }
 
     @Override
-    public SplitBlockInfo MakeSplit() throws FileNotFoundException {// add ur algo here
+    public synchronized SplitBlockInfo MakeSplit() throws FileNotFoundException {// add ur algo here
         SplitBlockInfo sp = new SplitBlockInfo();
         sp.setFirstByteLocation(startSplitAtPosition);
         this.startSplitAtPosition = this.getLengthOfSplit();
@@ -67,4 +67,5 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
         }
         return -1;
     }
+
 }
