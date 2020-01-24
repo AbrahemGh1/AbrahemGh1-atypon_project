@@ -32,7 +32,7 @@ class LineRecordReader implements RecordReader<Integer, String> {
     public String getValue() throws IOException {
         randomAccessFile.seek(pos);
         String retVal = randomAccessFile.readLine();
-        pos += retVal.length() + 1;  //+1 start read from next line in the next time.
+        pos += retVal.length() + 1;  //+1 next time start read from next line.
         return retVal;
     }
 

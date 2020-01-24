@@ -13,7 +13,7 @@ public class MangerServer {
     public static void main(String[] args) throws FileNotFoundException {
         FileSplit fs = new FileSplit(Paths.get("/home/abrahem/Desktop/input.txt"));
         List<SplitBlockInfo> s = fs.getSplits();
-
+//8364
         try {
             TaskPool taskPool = new TaskPool();
             taskPool.setInputSplits((ArrayList<SplitBlockInfo>) s);

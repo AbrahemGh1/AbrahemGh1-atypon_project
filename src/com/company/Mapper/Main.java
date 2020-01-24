@@ -1,7 +1,5 @@
 package com.company.Mapper;
 
-import com.company.input.SplitBlockInfo;
-
 import java.io.IOException;
 
 public class Main {
@@ -14,14 +12,15 @@ public class Main {
 //        m.start();
 
         //       ThreadPoolExecutor TNumber= (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
-        MapperListener mapperListener = new MapperListener(2000);
-        mapperListener.start();
-        for (SplitBlockInfo s : mapperListener.ml) {
-            Mapper<? extends Integer, ? extends String, ? extends String, ? extends Integer> m = new myMapper(s);
-            m.start();
-        }
+        MapperListener mapperListener = new MapperListener(2000, "REQUEST_TASK");
+        mapperListener.run();
+//        for (SplitBlockInfo s : mapperListener.ml) {
+//            Mapper<? extends Integer, ? extends String, ? extends String, ? extends Integer> m = new myMapper(s);
+//            m.start();
+//        }
 
         System.out.println("Finish");
 
     }
 }
+//91636
