@@ -32,12 +32,23 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
     }
 
     @Override
-    public synchronized SplitBlockInfo MakeSplit() throws FileNotFoundException {// add ur algo here
-        SplitBlockInfo sp = new SplitBlockInfo();
+    public synchronized InputBlock MakeSplit() throws FileNotFoundException {// add ur algo here
+        InputBlock sp = new InputBlock();
         sp.setFirstByteLocation(startSplitAtPosition);
         this.startSplitAtPosition = this.getLengthOfSplit();
         sp.setLength(startSplitAtPosition);
         sp.setDataLocation(file.getAbsolutePath());
+        long pos2 = startSplitAtPosition;
+        try {
+            randomAccessFile.seek(sp.getFirstByteLocation());
+            byte[] bytes = new byte[(int) (sp.getLength() - sp.getFirstByteLocation())];//10 the max size allowed to extend split.
+            randomAccessFile.readFully(bytes);
+            String str = new String(bytes);
+            System.out.println("[" + str + "]");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return sp;
     }
 
@@ -51,21 +62,27 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
         if (lastIndex >= file.length())
             return file.length();//need test
 
-        return getNextEmptyCharacterFromFile(lastIndex);
+        return getNextEmptyCharacterText2(lastIndex);
     }
 
-    private long getNextEmptyCharacterFromFile(long startOffset) {
+    private long getNextEmptyCharacterText2(long startOffset) {
+        //1-this need to refactor later, dot use String, use StringBuff
+        //2 do't read byte by byte its too slow.
+        int nextEmptyChar = 0;
+        byte[] bytes = new byte[1];
         try {
             randomAccessFile.seek(startOffset);
-            byte[] bytes = new byte[10];//10 the max size allowed to extend split.
-            randomAccessFile.readFully(bytes);
-            String str = new String(bytes);
-            int temp = str.indexOf(" ");
-            return str.indexOf(" ") + startOffset;
+            do {
+                nextEmptyChar++;
+                randomAccessFile.read(bytes);
+                String t = new String(bytes);
+                if (t.equalsIgnoreCase(" "))
+                    break;
+            } while (true);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return -1;
+        return nextEmptyChar + startOffset;
     }
 
 }

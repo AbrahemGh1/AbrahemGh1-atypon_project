@@ -19,8 +19,8 @@ public class FileSplit implements InputSplit {
     }
 
     @Override
-    public List<SplitBlockInfo> getSplits() throws FileNotFoundException {
-        List<SplitBlockInfo> ls = new ArrayList<>();
+    public List<InputBlock> getSplits() throws FileNotFoundException {
+        List<InputBlock> ls = new ArrayList<>();
         while (isSplittable()) {
             ls.add(getSplitNow());
         }
@@ -28,7 +28,7 @@ public class FileSplit implements InputSplit {
         return ls;
     }
 
-    public SplitBlockInfo getSplitNow() throws FileNotFoundException {
+    public InputBlock getSplitNow() throws FileNotFoundException {
         if (isSplittable())
             return sa.MakeSplit();
         return null;

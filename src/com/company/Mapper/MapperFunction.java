@@ -1,15 +1,15 @@
 package com.company.Mapper;
 
-import com.company.input.SplitBlockInfo;
+import com.company.input.InputBlock;
 
-import java.io.FileNotFoundException;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class myMapper extends Mapper<Integer, String, String, Integer> {
+public class MapperFunction extends Mapper<Integer, String, String, Integer> {
+    public static int all = 0;
 
-    public myMapper(SplitBlockInfo s) throws FileNotFoundException {
+    public MapperFunction(InputBlock s) {
         super(s);
     }
 
@@ -32,6 +32,6 @@ public class myMapper extends Mapper<Integer, String, String, Integer> {
         wordCount.keySet().forEach(k -> {
             out.put(k, wordCount.get(k));
         });
-
+        all += out.size();
     }
 }

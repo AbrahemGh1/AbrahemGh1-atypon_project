@@ -1,6 +1,6 @@
 package com.company.Mapper;
 
-import com.company.input.SplitBlockInfo;
+import com.company.input.InputBlock;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,15 +8,17 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-class REQUEST_TASK implements Requester {
-    public List<SplitBlockInfo> TasksList = new ArrayList<>();
+class REQUEST_TASK extends Observable implements Requester {
+    public static List<InputBlock> TasksList = new ArrayList<>();
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
     Socket socket;
 
     REQUEST_TASK(Socket s) {
         try {
+            this.addObserver(Main.taskExecutor);
             socket = s;
             dataInputStream = new DataInputStream(s.getInputStream());
             dataOutputStream = new DataOutputStream(s.getOutputStream());
@@ -41,8 +43,10 @@ class REQUEST_TASK implements Requester {
     }
 
     private void receiveTaskFromSocket() throws IOException {
-        SplitBlockInfo sb = new SplitBlockInfo();
+        InputBlock sb = new InputBlock();
         sb.read(dataInputStream);
         TasksList.add(sb);
+        setChanged();
+        notifyObservers(sb);
     }
 }

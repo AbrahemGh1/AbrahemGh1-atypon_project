@@ -1,8 +1,7 @@
 package com.company.Mapper;
 
-import com.company.input.SplitBlockInfo;
+import com.company.input.InputBlock;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -11,7 +10,7 @@ public abstract class Mapper<keyIn, valueIn, keyOut, valueOut> extends Thread {
     HashMap<keyOut, valueOut> out;
     private RecordReader recordReader;
 
-    Mapper(SplitBlockInfo s) throws FileNotFoundException {
+    Mapper(InputBlock s) {
         recordReader = new LineRecordReader(s);
         out = new HashMap<>();
     }
@@ -33,5 +32,4 @@ public abstract class Mapper<keyIn, valueIn, keyOut, valueOut> extends Thread {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,21 +1,26 @@
 package com.company.Mapper;
 
-import com.company.input.SplitBlockInfo;
+import com.company.input.InputBlock;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
 
 class LineRecordReader implements RecordReader<Integer, String> {
-    SplitBlockInfo splitBlockInfo;
+    InputBlock splitBlockInfo;
     RandomAccessFile randomAccessFile;
     private Integer lineNumber;
     private Long pos;
 
-    LineRecordReader(SplitBlockInfo b) throws FileNotFoundException {
+    LineRecordReader(InputBlock b) {
         splitBlockInfo = b;
         lineNumber = 0;
-        randomAccessFile = new RandomAccessFile(b.getDataLocation(), "r");
+        try {
+            randomAccessFile = new RandomAccessFile(b.getDataLocation(), "r");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         pos = splitBlockInfo.getFirstByteLocation();
     }
 
@@ -31,7 +36,8 @@ class LineRecordReader implements RecordReader<Integer, String> {
     @Override
     public String getValue() throws IOException {
         randomAccessFile.seek(pos);
-        String retVal = randomAccessFile.readLine();
+        String retVal = new String(randomAccessFile.readLine().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        System.out.println("[" + retVal + "]");
         pos += retVal.length() + 1;  //+1 next time start read from next line.
         return retVal;
     }

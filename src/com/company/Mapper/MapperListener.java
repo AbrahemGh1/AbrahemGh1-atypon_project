@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class MapperListener {
+public class MapperListener extends Thread {
     private final Socket s;
     private String requestName;
 

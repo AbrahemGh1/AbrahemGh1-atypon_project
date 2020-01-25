@@ -7,7 +7,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SplitBlockInfo implements Comparable<SplitBlockInfo>, Writable {
+public class InputBlock implements Comparable<InputBlock>, Writable {
     private long firstByteLocation;
     private Long length;
     private String dataLocation;
@@ -58,8 +58,8 @@ public class SplitBlockInfo implements Comparable<SplitBlockInfo>, Writable {
     static int x = 0;
 
     @Override
-    public int compareTo(SplitBlockInfo o) {
-        SplitBlockInfo temp = o;
+    public int compareTo(InputBlock o) {
+        InputBlock temp = o;
         Long x = this.getLength() - this.getFirstByteLocation();
         Long y = temp.getLength() - temp.getFirstByteLocation();
         return x.compareTo(y);
