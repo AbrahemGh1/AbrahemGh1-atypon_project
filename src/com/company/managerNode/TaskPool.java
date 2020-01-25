@@ -1,9 +1,8 @@
-package com.company.communications;
+package com.company.managerNode;
 
 import com.company.input.SplitBlockInfo;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.util.*;
 
 public class TaskPool implements Closeable {
@@ -20,16 +19,17 @@ public class TaskPool implements Closeable {
     }
 
     public synchronized SplitBlockInfo getNewInputSplit() {
-        if (!hasTask())
+        if (!tasksFinished())
             throw new IllegalStateException("can't get from empty TaskPool");//this need custom exception.
-        SplitBlockInfo temp = null;
+        SplitBlockInfo temp;
         temp = inputSplits.get(0);
         inputSplits.remove(0);
+        isClosed = !tasksFinished();
         return temp;
     }
 
     public synchronized List<? extends SplitBlockInfo> getNewInputSplit(int number) {
-        ArrayList<SplitBlockInfo> inputSplits = new ArrayList<SplitBlockInfo>();
+        ArrayList<SplitBlockInfo> inputSplits = new ArrayList<>();
         int counter = 0;
         while (counter < number) {
             inputSplits.add(getNewInputSplit());
@@ -43,12 +43,12 @@ public class TaskPool implements Closeable {
         inputSplits = e;
     }
 
-    public boolean hasTask() {
+    public boolean tasksFinished() {
         return !inputSplits.isEmpty();
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         isClosed = true;
     }
 
