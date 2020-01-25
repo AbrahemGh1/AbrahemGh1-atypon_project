@@ -25,8 +25,7 @@ public class uploadTaskHandler extends Thread {
     @Override
     public void run() {
         try {
-            //  int numberOfRequestedTasks = dataInputStream.readInt();
-            uploadTasks(0);
+            uploadTasks();
         } catch (TasksFinishedBeforeFullyServed ignore) {
             try {
                 clientSocket.close();
@@ -40,18 +39,15 @@ public class uploadTaskHandler extends Thread {
     }
 
 
-    private void uploadTasks(int numberOfRequestedTasks) throws IOException {
-        int x = 0;
+    private void uploadTasks() throws IOException {
         while (true) {
             uploadTask();
-            x++;
-            System.out.println(x);
         }
     }
 
     private void uploadTask() throws IOException {
         synchronized (taskPool) {
-            if (!taskPool.tasksFinished())
+            if (taskPool.isEmpty())//review function name
                 throw new TasksFinishedBeforeFullyServed();
             taskPool.getNewInputSplit().write(dataOutputStream);
         }

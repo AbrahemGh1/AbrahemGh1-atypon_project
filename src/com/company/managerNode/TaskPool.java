@@ -19,12 +19,12 @@ public class TaskPool implements Closeable {
     }
 
     public synchronized SplitBlockInfo getNewInputSplit() {
-        if (!tasksFinished())
+        if (isEmpty())
             throw new IllegalStateException("can't get from empty TaskPool");//this need custom exception.
         SplitBlockInfo temp;
         temp = inputSplits.get(0);
         inputSplits.remove(0);
-        isClosed = !tasksFinished();
+        isClosed = isEmpty();
         return temp;
     }
 
@@ -43,8 +43,8 @@ public class TaskPool implements Closeable {
         inputSplits = e;
     }
 
-    public boolean tasksFinished() {
-        return !inputSplits.isEmpty();
+    public synchronized boolean isEmpty() {
+        return inputSplits.isEmpty();
     }
 
     @Override
