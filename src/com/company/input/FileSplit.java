@@ -8,14 +8,10 @@ import java.util.List;
 
 public class FileSplit implements InputSplit {
     //Consider to use Thread her but note the input split should be sorted before go to mapper for performance issue
-    private long start;
-    private long length;
     private SplitAlgotherm sa;
 
     public FileSplit(Path FilePath) throws FileNotFoundException {
-        start = 0;
-        sa = new DefaultTextSplitAlgotherm(FilePath);
-        length = sa.getLength();
+        sa = SplitAlgothermFactory.getSplitAlgotherm(FilePath);
     }
 
     @Override

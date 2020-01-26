@@ -38,14 +38,22 @@ class REQUEST_TASK extends Observable implements Requester {
                 count++;
             }
         } catch (IOException ignore) {
-            System.out.println(count);
+            System.out.println("number Of input block for this mapper is:" + count);
+            Main.taskExecutor.getResult();
         }
     }
 
     private void receiveTaskFromSocket() throws IOException {
+        List e = new ArrayList();
         InputBlock sb = new InputBlock();
         sb.read(dataInputStream);
         TasksList.add(sb);
+        boolean flag = e.add(sb);
+
+        if (!flag) {
+            System.exit(0);
+
+        }
         setChanged();
         notifyObservers(sb);
     }

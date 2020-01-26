@@ -67,7 +67,7 @@ class DefaultTextSplitAlgotherm implements SplitAlgotherm {
 
     private long getNextEmptyCharacterText2(long startOffset) {
         //1-this need to refactor later, dot use String, use StringBuff
-        //2 do't read byte by byte its too slow.
+        //2 do't read byte by byte it's too slow.
         int nextEmptyChar = 0;
         byte[] bytes = new byte[1];
         try {
