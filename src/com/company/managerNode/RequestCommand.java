@@ -17,5 +17,12 @@ enum RequestCommand implements Command {
         public void execute(Socket s) throws IOException {
             s.close();
         }
-    }
+    },
+
+//    REQUEST_REDUCER_INPUT {
+//        @Override
+//        public void execute(Socket s) throws IOException {
+//            new Recive_INPUT();
+//        }
+//    }
 }

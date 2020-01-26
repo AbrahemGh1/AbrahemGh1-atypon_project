@@ -1,51 +1,49 @@
 package com.company.Mapper;
 
-import com.company.input.InputBlock;
-
 import java.io.IOException;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.Collections;
+import java.util.TreeMap;
+
+interface Partitioner<K2, V2> {
+    int getPartition(K2 key, V2 value, int numReduce);
+}
 
 public class Main {
-    public static taskExecutor taskExecutor = new taskExecutor();
+    public static TaskExecutor taskExecutor = new TaskExecutor();
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // TimeUnit.SECONDS.sleep(5);
 
-        MapperListener mapperListener = new MapperListener(2000, "REQUEST_TASK");
-        mapperListener.start();
-        mapperListener.join();
-        taskExecutor.getResult();
-        System.out.println(Mapper.out.size());
+//        MapperRequester mapperListener = new MapperRequester(2000, "REQUEST_TASK");
+//        mapperListener.start();
+        // MapperListener mapperListener1 = new MapperListener(2000, "REQUEST_CODE");
+        MapperRequester mapperRequester = new MapperRequester(3000, "REDUCERS_IP_ADDRISS");
+        mapperRequester.start();
+        Mapper.out = Collections.synchronizedMap(new TreeMap<>());
+        Mapper.out.put("Abrahem", 1);
+        Mapper.out.put("Baker", 1);
+        Mapper.out.put("Gh", 1);
+
+        MapperRequester mapperRequester = new MapperRequester(3000, "INPUT_TO_REDUCERS");
+        mapperRequester.start();
 
 
-        //18919
+//        mapperListener.start();
+//        mapperListener.join();
+//        taskExecutor.getResult();
+//        System.out.println(Mapper.out.size());
+//        HashCodePartitioner hcp= new HashCodePartitioner();
+//        System.out.println(hcp.getPartition("Abrahem",22,2));
+
 
     }
 }
-//91636
 
-class taskExecutor<keyOut, valueOut> implements Observer {
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
-
+class HashCodePartitioner implements Partitioner {
     @Override
-    public void update(Observable o, Object arg) {
-        executorService.submit(new MapperFunction((InputBlock) arg));
-    }
-
-    public Map<Object, Object> getResult() {
-        executorService.shutdown();
-        try {
-            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return Mapper.out;
+    public int getPartition(Object key, Object value, int numPartitions) {
+        return (key.hashCode() & Integer.MAX_VALUE) % numPartitions;
     }
 }
 

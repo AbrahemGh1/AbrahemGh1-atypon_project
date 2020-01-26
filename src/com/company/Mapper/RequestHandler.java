@@ -4,8 +4,8 @@ import java.net.Socket;
 import java.util.function.Function;
 
 enum RequestHandler {
-    REQUEST_TASK("REQUEST_TASK", REQUEST_TASK::new),
-    // CALCULATE("clientRequestCalculator", ClientRequestCalculatorHandler::new),
+    REQUEST_TASK("REQUEST_TASK", TASK_REQUEST::new),
+    REQUEST_Code("INPUT_TO_REDUCERS", INPUT_TO_REDUCERS::new),
     o("A", null);
     // ...
 

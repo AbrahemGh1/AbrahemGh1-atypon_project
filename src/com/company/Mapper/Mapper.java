@@ -18,15 +18,15 @@ public abstract class Mapper<keyIn, valueIn, keyOut, valueOut> extends Thread {
         recordReader = new LineRecordReader(s);
     }
 
+    static {
+        out = Collections.synchronizedMap(new TreeMap<>());
+    }
+
     protected abstract void map(keyIn key, valueIn value) throws IOException, InterruptedException;
 
     @Override
     public void run() {
         run2();
-    }
-
-    static {
-        out = Collections.synchronizedMap(new TreeMap<>());
     }
 
     public void run2() {
