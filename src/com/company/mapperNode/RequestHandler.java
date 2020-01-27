@@ -1,4 +1,4 @@
-package com.company.Mapper;
+package com.company.mapperNode;
 
 import java.net.Socket;
 import java.util.function.Function;
@@ -6,6 +6,7 @@ import java.util.function.Function;
 enum RequestHandler {
     REQUEST_TASK("REQUEST_TASK", TASK_REQUEST::new),
     REQUEST_Code("INPUT_TO_REDUCERS", INPUT_TO_REDUCERS::new),
+    REQUEST_REDUCERS_PORT("REQUEST_REDUCERS_PORT", REDUCERS_PORT_REQUEST::new),
     o("A", null);
     // ...
 

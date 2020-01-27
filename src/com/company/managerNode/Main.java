@@ -2,6 +2,7 @@ package com.company.managerNode;
 
 import com.company.input.FileSplit;
 import com.company.input.InputBlock;
+import com.company.input.SplitAlgothermFactory;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        FileSplit fs = new FileSplit(Paths.get("/home/abrahem/Desktop/input.txt"));
+        FileSplit fs = new FileSplit(Paths.get("/home/abrahem/Desktop/input.txt"), new SplitAlgothermFactory());
         List<InputBlock> s = fs.getSplits();
 
 

@@ -1,4 +1,4 @@
-package com.company.Mapper;
+package com.company.mapperNode;
 
 import com.company.input.InputBlock;
 
@@ -10,16 +10,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Mapper<keyIn, valueIn, keyOut, valueOut> extends Thread {
 
-    static Map<Object, Object> out = null;
+    static Map<Object, Object> MapperOut = null;
     private RecordReader recordReader;
-    static AtomicInteger numberOfThreads = new AtomicInteger(0);
+    static AtomicInteger numberOfThreadsPerMapper = new AtomicInteger(0);
 
     Mapper(InputBlock s) {
         recordReader = new LineRecordReader(s);
     }
 
     static {
-        out = Collections.synchronizedMap(new TreeMap<>());
+        MapperOut = Collections.synchronizedMap(new TreeMap<>());
     }
 
     protected abstract void map(keyIn key, valueIn value) throws IOException, InterruptedException;

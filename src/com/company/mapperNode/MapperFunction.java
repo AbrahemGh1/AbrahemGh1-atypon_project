@@ -1,4 +1,4 @@
-package com.company.Mapper;
+package com.company.mapperNode;
 
 import com.company.input.InputBlock;
 
@@ -7,26 +7,29 @@ import java.util.regex.Pattern;
 
 public class MapperFunction extends Mapper<Integer, String, String, Integer> {
 
+    Pattern pattern = Pattern.compile("[a-zA-Z]+");
+    Matcher matcher;
+
     public MapperFunction(InputBlock s) {
         super(s);
     }
 
-    Pattern pattern = Pattern.compile("[a-zA-Z]+");
-    Matcher matcher;
-
     @Override
-    protected void map(Integer integer, String value) {
+    protected void map(Integer key, String value) {
+//        String[] words = value.split(" ");
+//        for (String word : words) {
+//            //do something
+//        }
         String str = value;
         if (str != null && !str.equals("")) {
             matcher = pattern.matcher(str);
             while (matcher.find()) {
                 String word = matcher.group();
-                if (!out.containsKey(word))
-                    out.put(word, 1);
+                if (!MapperOut.containsKey(word))
+                    MapperOut.put(word, 1);
                 else
-                    out.put(word, (Integer) out.get(word) + 1);
+                    MapperOut.put(word, (Integer) MapperOut.get(word) + 1);
             }
         }
-        //  System.out.println("Line number:"+integer);
     }
 }

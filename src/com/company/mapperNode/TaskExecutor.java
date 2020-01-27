@@ -1,4 +1,4 @@
-package com.company.Mapper;
+package com.company.mapperNode;
 
 import com.company.input.InputBlock;
 
@@ -24,6 +24,6 @@ class TaskExecutor<keyOut, valueOut> implements Observer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return Mapper.out;
+        return Mapper.MapperOut;
     }
 }

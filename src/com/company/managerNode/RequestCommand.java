@@ -1,7 +1,11 @@
 package com.company.managerNode;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 enum RequestCommand implements Command {
 
@@ -19,10 +23,48 @@ enum RequestCommand implements Command {
         }
     },
 
-//    REQUEST_REDUCER_INPUT {
-//        @Override
-//        public void execute(Socket s) throws IOException {
-//            new Recive_INPUT();
-//        }
-//    }
+    REQUEST_REDUCERS_PORT {
+        @Override
+        public void execute(Socket s) throws IOException {
+            new REQUEST_REDUCERS_PORT(s).start(s);
+        }
+    }
+}
+
+class REQUEST_REDUCERS_PORT {
+    public static List<Integer> REDUCERS_PORT = new ArrayList();
+
+    static {
+        REDUCERS_PORT.add(4000);
+        REDUCERS_PORT.add(4001);
+        REDUCERS_PORT.add(4002);
+        REDUCERS_PORT.add(4003);
+        REDUCERS_PORT.add(4004);
+    }
+
+    DataInputStream in = null;
+    DataOutputStream out = null;
+    Socket socket = null;
+
+    public REQUEST_REDUCERS_PORT(Socket s) {
+        socket = s;
+        try {
+            in = new DataInputStream(s.getInputStream());
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void start(Socket s) {
+        try {
+            for (int i = 0; i < REDUCERS_PORT.size(); i++) {
+                out.writeInt(REDUCERS_PORT.get(i));
+            }
+            s.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

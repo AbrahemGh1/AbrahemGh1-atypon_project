@@ -1,4 +1,4 @@
-package com.company.Mapper;
+package com.company.mapperNode;
 
 import com.company.any.Writable;
 
@@ -7,13 +7,11 @@ import java.net.Socket;
 import java.util.Map;
 
 public class INPUT_TO_REDUCERS implements Requester {
-    private Socket socket = null;
     private DataInputStream in = null;
     private DataOutputStream socketOut = null;
     private String INPUT_TO_REDUCERS = "INPUT_TO_REDUCERS";
 
     public INPUT_TO_REDUCERS(Socket socket) {
-        this.socket = socket;
         try {
             in = new DataInputStream(socket.getInputStream());
             socketOut = new DataOutputStream(socket.getOutputStream());
@@ -26,7 +24,7 @@ public class INPUT_TO_REDUCERS implements Requester {
     public void request(Socket s) {
         try {
             socketOut.writeUTF(INPUT_TO_REDUCERS);
-            for (Map.Entry<Object, Object> entry : Mapper.out.entrySet()) {
+            for (Map.Entry<Object, Object> entry : Mapper.MapperOut.entrySet()) {
                 socketOut.writeChars((String) entry.getKey());
                 socketOut.writeInt((Integer) entry.getValue());
                 System.out.println("Key = " + entry.getKey() +

@@ -1,4 +1,4 @@
-package com.company.Mapper;
+package com.company.mapperNode;
 
 import java.io.IOException;
 import java.net.InetAddress;
