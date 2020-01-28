@@ -1,13 +1,12 @@
-package com.company.mapperNode;
+package com.company.mapperNode.recordReader;
 
 import java.io.Closeable;
 import java.io.IOException;
 
-interface RecordReader<K, V> extends Closeable {
+public interface RecordReader<K, V> extends Closeable {
     /**
      * Returns true if this RecordReader has another Record.
      *
-     * @return true iff a key/value was read, false if at EOF.
      * @throws IOException if this file is closed
      */
     boolean hasNext() throws IOException;

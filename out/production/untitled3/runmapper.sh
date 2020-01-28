@@ -1,2 +1,2 @@
 #!bin/sh
-docker run --name Mapper -itd ubuntu
+docker run --name MapperNode -itd ubuntu

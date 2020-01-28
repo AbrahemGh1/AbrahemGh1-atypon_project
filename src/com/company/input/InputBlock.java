@@ -1,6 +1,6 @@
 package com.company.input;
 
-import com.company.any.Writable;
+import com.company.sw.Writable;
 
 import java.io.DataInput;
 import java.io.DataOutput;

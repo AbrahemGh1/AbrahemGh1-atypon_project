@@ -1,12 +1,13 @@
-package com.company.mapperNode;
+package com.company.mapperNode.recordReader;
 
 import com.company.input.InputBlock;
+import com.company.mapperNode.recordReader.RecordReader;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 
-class LineRecordReader implements RecordReader<Integer, String> {
+public class LineRecordReader implements RecordReader<Integer, String> {
     InputBlock splitBlockInfo;
     RandomAccessFile randomAccessFile;
     private Integer lineNumber;
@@ -23,7 +24,7 @@ class LineRecordReader implements RecordReader<Integer, String> {
         return lineNumber++;
     }
 
-    LineRecordReader(InputBlock b) {
+    public LineRecordReader(InputBlock b) {
         splitBlockInfo = b;
         lineNumber = 0;
         try {

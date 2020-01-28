@@ -1,2 +1,2 @@
 #!bin/sh
-docker run --name reducer -itd ubuntu
+docker run --name ReducerNode -itd ubuntu

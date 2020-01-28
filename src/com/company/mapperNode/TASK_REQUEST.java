@@ -1,6 +1,7 @@
 package com.company.mapperNode;
 
 import com.company.input.InputBlock;
+import com.company.mapperNode.requester.Requester;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

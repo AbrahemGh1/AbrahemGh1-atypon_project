@@ -10,10 +10,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 class TaskExecutor<keyOut, valueOut> implements Observer {
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private static ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Override
     public void update(Observable o, Object arg) {
+
         executorService.submit(new MapperFunction((InputBlock) arg));
     }
 

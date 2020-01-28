@@ -6,15 +6,17 @@ import java.net.Socket;
 
 public class MapperRequester extends Thread {
     private final Socket s;
-    private String requestName;
+    private String requestType;
 
     public MapperRequester(int portNumber, String requestName) throws IOException {
         s = new Socket(InetAddress.getLocalHost(), portNumber);
-        this.requestName = requestName;
+        this.requestType = requestName;
     }
 
+    @Override
     public void run() {
-        RequestHandler.runOnRequestMatch(s, requestName);
+
+        RequestHandler.runOnRequestMatch(s, requestType);
     }
 }
 

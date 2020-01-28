@@ -7,8 +7,6 @@ import java.util.regex.Pattern;
 
 public class MapperFunction extends Mapper<Integer, String, String, Integer> {
 
-    Pattern pattern = Pattern.compile("[a-zA-Z]+");
-    Matcher matcher;
 
     public MapperFunction(InputBlock s) {
         super(s);
@@ -19,17 +17,24 @@ public class MapperFunction extends Mapper<Integer, String, String, Integer> {
 //        String[] words = value.split(" ");
 //        for (String word : words) {
 //            //do something
+//            if (!MapperOut.containsKey(word))
+//                MapperOut.put(word ,1);
+//            else
+//                MapperOut.put(word,(Integer) MapperOut.get(word) + 1 );
 //        }
+
+        Pattern pattern = Pattern.compile("[a-zA-Z]+");
+        Matcher matcher;
         String str = value;
         if (str != null && !str.equals("")) {
             matcher = pattern.matcher(str);
-            while (matcher.find()) {
-                String word = matcher.group();
-                if (!MapperOut.containsKey(word))
-                    MapperOut.put(word, 1);
-                else
-                    MapperOut.put(word, (Integer) MapperOut.get(word) + 1);
-            }
+                while (matcher.find()) {
+                    String word = matcher.group();
+                    if (!MapperOut.containsKey(word))
+                        MapperOut.put(word, 1);
+                    else
+                        MapperOut.put(word, (Integer) MapperOut.get(word) + 1);
+                }
         }
     }
 }
