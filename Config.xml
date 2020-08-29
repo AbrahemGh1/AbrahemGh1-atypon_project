@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ManagerConfig>
+
+    <mapperInfo>
+        <mapperNumber>2</mapperNumber>
+        <threadsNumber>2</threadsNumber>
+        <dataInputLocation>//home/abrahem/Desktop/input.txt</dataInputLocation>
+        <dataOutputLocation>//home/abrahem/Desktop/input.txt</dataOutputLocation>
+        <report>On</report>
+    </mapperInfo>
+
+    <reducerInfo>
+        <reducerNumber>2</reducerNumber>
+        <threadsNumber>2</threadsNumber>
+        <report>On</report>
+        <dataInputLocation>//home/abrahem/Desktop/input.txt</dataInputLocation>
+        <dataOutputLocation>//home/abrahem/Desktop/input.txt</dataOutputLocation>
+    </reducerInfo>
+</ManagerConfig>
